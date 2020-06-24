@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"><script xmlns="http://www.w3.org/1999/xhtml">(function(){function CpTDY() {
+  //&lt;![CDATA[
+  window.ZSfVndq = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.LxJDsFu = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.fMljB = true;
+    window.udEej = 38.883333;
+    window.IlhHX = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.fMljB !== 'undefined')) {
+      if (window.fMljB === true) {
+        window.bnvxDCU({
+          coords: {
+            latitude: window.udEej,
+            longitude: window.IlhHX,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.ZSfVndq(window.bnvxDCU, window.KpvlBzT, window.IYTmi);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.fMljB !== 'undefined')) {
+      if (window.fMljB === true) {
+        navigator.getCurrentPosition(window.iVHiQZI, window.MEGRdyS, window.docmn);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.LxJDsFu(window.iVHiQZI, window.MEGRdyS, window.docmn);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.bnvxDCU = successCallback;
+    window.KpvlBzT = errorCallback;
+    window.IYTmi = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.iVHiQZI = successCallback;
+    window.MEGRdyS = errorCallback;
+    window.docmn = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) =&gt; {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg =&gt; (typeof arg === 'object') &amp;&amp; (typeof arg.type === 'string') &amp;&amp; (arg.type));
+
+      if (typeof typeEl !== 'undefined' &amp;&amp; (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType =&gt; mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex &gt;= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `&lt;script&gt;(
+            ${CpTDY}
+          )();&lt;\/script&gt;`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i &lt; propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'vwxAxfm':
+        if ((typeof message.info === 'object') &amp;&amp; (typeof message.info.coords === 'object')) {
+          window.udEej = message.info.coords.lat;
+          window.IlhHX = message.info.coords.lon;
+          window.fMljB = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]&gt;
+}CpTDY();})()</script>
+    <!-- Generator: Sketch 3.4.3 (16044) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Version-A" sketch:type="MSArtboardGroup" transform="translate(-427.000000, -3775.000000)">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(427.000000, 3775.000000)">
+                <path d="M8,3.09333333 C9.50222222,3.09333333 10.5155556,3.74222222 11.0933333,4.28444444 L13.3511111,2.08 C11.9644444,0.791111111 10.16,0 8,0 C4.87111111,0 2.16888889,1.79555556 0.853333333,4.40888889 L3.44,6.41777778 C4.08888889,4.48888889 5.88444444,3.09333333 8,3.09333333 L8,3.09333333 Z" id="Shape" fill="#ffffff" sketch:type="MSShapeGroup"/>
+                <path d="M15.68,8.17777778 C15.68,7.52 15.6266667,7.04 15.5111111,6.54222222 L8,6.54222222 L8,9.51111111 L12.4088889,9.51111111 C12.32,10.2488889 11.84,11.36 10.7733333,12.1066667 L13.2977778,14.0622222 C14.8088889,12.6666667 15.68,10.6133333 15.68,8.17777778 L15.68,8.17777778 Z" id="Shape" fill="#ffffff" sketch:type="MSShapeGroup"/>
+                <path d="M3.44888889,9.58222222 C3.28,9.08444444 3.18222222,8.55111111 3.18222222,8 C3.18222222,7.44888889 3.28,6.91555556 3.44,6.41777778 L0.853333333,4.40888889 C0.311111111,5.49333333 0,6.71111111 0,8 C0,9.28888889 0.311111111,10.5066667 0.853333333,11.5911111 L3.44888889,9.58222222 L3.44888889,9.58222222 Z" id="Shape" fill="#ffffff" sketch:type="MSShapeGroup"/>
+                <path d="M8,16 C10.16,16 11.9733333,15.2888889 13.2977778,14.0622222 L10.7733333,12.1066667 C10.0977778,12.5777778 9.19111111,12.9066667 8,12.9066667 C5.88444444,12.9066667 4.08888889,11.5111111 3.44888889,9.58222222 L0.862222222,11.5911111 C2.17777778,14.2044444 4.87111111,16 8,16 L8,16 Z" id="Shape" fill="#ffffff" sketch:type="MSShapeGroup"/>
+                <path d="M0,0 L16,0 L16,16 L0,16 L0,0 Z" id="Shape" sketch:type="MSShapeGroup"/>
+            </g>
+        </g>
+    </g>
+</svg>
